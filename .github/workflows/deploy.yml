@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,16 +18,20 @@ jobs:
       with:
         node-version: '16'
 
+    - name: Change Working Directory
+      # If your Node.js project is in a subfolder, adjust this path
+      run: cd app
+
     - name: Install Dependencies
       run: npm install
+      working-directory: app  # Adjust to your Node.js project folder
 
     - name: Build Application
+      env:
+        REACT_APP_SHEETDB_API_URL: ${{ secrets.SHEETDB_API_URL }}
       run: npm run build
-
-    - name: Set Environment Variable for SheetDB API
-      run: echo "REACT_APP_SHEETDB_API_URL=${{ secrets.SHEETDB_API_URL }}" >> $GITHUB_ENV
+      working-directory: app  # Adjust to your Node.js project folder
 
     - name: Deploy Application
       run: npm run deploy
-      env:
-        REACT_APP_SHEETDB_API_URL: ${{ secrets.SHEETDB_API_URL }}
+      working-directory: app  # Adjust to your Node.js project folder
