@@ -3,19 +3,9 @@ import React from 'react';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Welcome to My React App</h1>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h1>Welcome to My Frontend</h1>
+        <p>This is the starting point for your frontend development.</p>
       </header>
     </div>
   );
