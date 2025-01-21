@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const attendeesInput = document.getElementById("attendees");
     const kidsInput = document.getElementById("kids");
     const amountDisplay = document.getElementById("amount");
-    const discountDisplay = document.getElementById("discount");
     const submitButton = document.getElementById("submitButton");
 
     const originalPrice = 500;
@@ -33,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Disable the submit button to prevent multiple clicks
         submitButton.disabled = true;
         submitButton.textContent = "Submitting...";
 
@@ -55,7 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
             submission_date: submission_date
         };
 
-        fetch("https://sheetdb.io/api/v1/yn7b1xmpzeztl", {
+        const apiUrl = process.env.REACT_APP_SHEETDB_API_URL || "https://example.com/api/default"; // Default fallback URL
+
+        fetch(apiUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -64,31 +64,13 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(response => response.json())
         .then(data => {
-            window.location.href = "thankyou.html"; // Redirect to Thank You page
+            window.location.href = "thankyou.html";
         })
         .catch(error => {
             console.error("Error submitting data to SheetDB: ", error);
             alert("An error occurred while submitting your data. Please try again.");
-            // Re-enable the submit button in case of an error
             submitButton.disabled = false;
             submitButton.textContent = "Submit";
-        });
-    });
-
-    const copyButtons = document.querySelectorAll("[id^='copyButton']");
-    copyButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            const upiNumberElement = button.previousElementSibling.querySelector("span");
-            const upiNumber = upiNumberElement.textContent;
-
-            navigator.clipboard.writeText(upiNumber).then(() => {
-                button.textContent = "Copied";
-                setTimeout(() => {
-                    button.textContent = "Copy UPI";
-                }, 3000);
-            }).catch(err => {
-                console.error("Failed to copy UPI Number: ", err);
-            });
         });
     });
 });

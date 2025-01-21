@@ -10,18 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-    - name: Install dependencies
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install Dependencies
       run: npm install
 
-    - name: Build the application
+    - name: Build Application
       run: npm run build
 
-    - name: Deploy the application
+    - name: Set Environment Variable for SheetDB API
+      run: echo "REACT_APP_SHEETDB_API_URL=${{ secrets.SHEETDB_API_URL }}" >> $GITHUB_ENV
+
+    - name: Deploy Application
+      run: npm run deploy
       env:
-        API_URL: ${{ secrets.SHEETDB_API_URL }}
-      run: |
-        echo "Deploying with API URL: $API_URL"
-        # Example of using the secret in your deployment process.
+        REACT_APP_SHEETDB_API_URL: ${{ secrets.SHEETDB_API_URL }}
