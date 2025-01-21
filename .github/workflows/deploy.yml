@@ -18,20 +18,16 @@ jobs:
       with:
         node-version: '16'
 
-    - name: Change Working Directory
-      # If your Node.js project is in a subfolder, adjust this path
-      run: cd app
-
     - name: Install Dependencies
       run: npm install
-      working-directory: app  # Adjust to your Node.js project folder
+      working-directory: app  # Adjust to your app's directory
 
     - name: Build Application
       env:
         REACT_APP_SHEETDB_API_URL: ${{ secrets.SHEETDB_API_URL }}
       run: npm run build
-      working-directory: app  # Adjust to your Node.js project folder
+      working-directory: app  # Adjust to your app's directory
 
     - name: Deploy Application
       run: npm run deploy
-      working-directory: app  # Adjust to your Node.js project folder
+      working-directory: app  # Adjust to your app's directory
