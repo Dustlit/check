@@ -1,0 +1,27 @@
+name: Deploy Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build the application
+      run: npm run build
+
+    - name: Deploy the application
+      env:
+        API_URL: ${{ secrets.SHEETDB_API_URL }}
+      run: |
+        echo "Deploying with API URL: $API_URL"
+        # Example of using the secret in your deployment process.
