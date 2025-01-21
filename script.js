@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // Use your actual SheetDB API URL here
-            const apiUrl = process.env.SHEETDB_API_URL;
+            const apiUrl = process.env.API_URL;
             // Make the POST request
             const result = await fetch(apiUrl, {
                 method: "POST",
